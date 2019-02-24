@@ -3,34 +3,12 @@ import math
 from twitter_specials import *
 
 my_dict = {}
-my_prob = {}
 my_cats = ["positive", "negative", "neutral", "irrelevant"]
+my_prob = {}
 my_totes = [0, 0, 0, 0]
-with open("labeled_corpus.tsv", encoding="utf-8") as lf:
-    readCSV = csv.reader(lf, delimiter='\t')
-    for row in readCSV:
-        line_arr = list(row)
 
-        tweet = line_arr[0]
-        category = line_arr[1]
-        for i in range(4):
-            if category == my_cats[i]:
-                my_totes[i] += 1
-        tweet = clean_tweet(tweet, emo_repl_order, emo_repl, re_repl)
-
-        words = tweet.split()
-        words_set = set()
-        for w in words:
-            if '#' not in w and '@' not in w:
-                words_set.add(w)
-
-        for w in words_set:
-            if w not in my_dict:
-                my_dict[w] = 0
-            my_dict[w] += 1
-
-multi_word = []
 each_counted = []
+multi_word = []
 total = 0
 for w, count in my_dict.items():
     if count > 1:
@@ -64,6 +42,29 @@ for w in my_prob:
     for i in range(4):
         my_prob[w][i] = my_prob[w][i] / my_totes[i]
 classed = []
+
+with open("labeled_corpus.tsv", encoding="utf-8") as lf:
+    readCSV = csv.reader(lf, delimiter='\t')
+    for row in readCSV:
+        line_arr = list(row)
+
+        tweet = line_arr[0]
+        category = line_arr[1]
+        for i in range(4):
+            if category == my_cats[i]:
+                my_totes[i] += 1
+        tweet = clean_tweet(tweet, emo_repl_order, emo_repl, re_repl)
+
+        words = tweet.split()
+        words_set = set()
+        for w in words:
+            if '#' not in w and '@' not in w:
+                words_set.add(w)
+
+        for w in words_set:
+            if w not in my_dict:
+                my_dict[w] = 0
+            my_dict[w] += 1
 
 with open('geo_twits_squares.tsv', encoding="utf-8") as gf:
 
