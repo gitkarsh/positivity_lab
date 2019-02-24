@@ -95,7 +95,7 @@ with open('geo_twits_squares.tsv', encoding="utf-8") as gf:
         final = list(converted_cats.keys())[list(converted_cats.values()).index(at_most)]
         classed.append((lat, long, final))
 
-with open('locations_figured.tsv', 'w') as lt:
+with open('locations_classified.tsv', 'w') as lt:
     writer = csv.writer(lt, delimiter='\t', lineterminator='\n')
     for i in classed:
         writer.writerow(i)

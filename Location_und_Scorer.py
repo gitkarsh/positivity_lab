@@ -5,7 +5,7 @@ import csv
 we are going to compute scores'''
 
 locations = {}
-with open("locations_figured.tsv", encoding="utf-8") as csvfile:
+with open("locations_classified.tsv", encoding="utf-8") as csvfile:
     readCSV = csv.reader(csvfile, delimiter='\t')
     for row in readCSV:
         line = list(row)
@@ -15,7 +15,7 @@ with open("locations_figured.tsv", encoding="utf-8") as csvfile:
             locations[latitude, longitude] = [0, 0]
         locations[latitude, longitude][0] += 1
 
-with open("locations_figured.tsv", encoding="utf-8") as csvfile:
+with open("locations_classified.tsv", encoding="utf-8") as csvfile:
     readCSV = csv.reader(csvfile, delimiter='\t')
     for row in readCSV:
         line = list(row)
