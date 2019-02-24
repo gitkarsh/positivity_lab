@@ -5,6 +5,15 @@ import csv
 we are going to compute scores'''
 
 locations = {}
+with open("locations_classified.tsv", encoding="utf-8") as csvfile:
+    readCSV = csv.reader(csvfile, delimiter='\t')
+    for row in readCSV:
+        line = list(row)
+        latitude = line[0]
+        longitude = line[1]
+        if (latitude, longitude) not in locations:
+            locations[latitude, longitude] = [0, 0]
+        locations[latitude, longitude][0] += 1
 
 with open("locations_classified.tsv", encoding="utf-8") as csvfile:
     readCSV = csv.reader(csvfile, delimiter='\t')
@@ -25,16 +34,6 @@ for i in locations:
     tag = list(i)
     tag.append(locations[i][1])
     figured.append(tag)
-
-with open("locations_classified.tsv", encoding="utf-8") as csvfile:
-    readCSV = csv.reader(csvfile, delimiter='\t')
-    for row in readCSV:
-        line = list(row)
-        latitude = line[0]
-        longitude = line[1]
-        if (latitude, longitude) not in locations:
-            locations[latitude, longitude] = [0, 0]
-        locations[latitude, longitude][0] += 1
 
 # Had to add "var data =" in order to get json file to read,
 data = []
