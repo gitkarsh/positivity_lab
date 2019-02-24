@@ -35,7 +35,7 @@ with open("locations_classified.tsv", encoding="utf-8") as csvfile:
         if (latitude, longitude) not in locations:
             locations[latitude, longitude] = [0, 0]
         locations[latitude, longitude][0] += 1
-        
+
 # Had to add "var data =" in order to get json file to read,
 data = []
 for i in figured:

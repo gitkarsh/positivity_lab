@@ -225,17 +225,17 @@ function initHeatMaps() {
 	posHeatmap = new google.maps.visualization.HeatmapLayer({
                 data: posArray,
                 map: map,
-                opacity: 0.75,
+                opacity: 0.7,
                 gradient: posGradient,
-                radius: 90
+                radius: 60
         });
 
         negHeatmap = new google.maps.visualization.HeatmapLayer({
                 data: negArray,
                 map: map,
-                opacity: 0.75,
+                opacity: 0.7,
                 gradient: negGradient,
-                radius: 90
+                radius: 60
         });
 		posHeatmap.setMap(map);
 		negHeatmap.setMap( map );        
