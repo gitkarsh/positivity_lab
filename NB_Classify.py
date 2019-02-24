@@ -6,8 +6,8 @@ my_dict = {}
 my_prob = {}
 my_cats = ["positive", "negative", "neutral", "irrelevant"]
 my_totes = [0, 0, 0, 0]
-with open("labeled_corpus.tsv", encoding="utf-8") as csvfile:
-    readCSV = csv.reader(csvfile, delimiter='\t')
+with open("labeled_corpus.tsv", encoding="utf-8") as lf:
+    readCSV = csv.reader(lf, delimiter='\t')
     for row in readCSV:
         line_arr = list(row)
 
@@ -38,8 +38,8 @@ for w, count in my_dict.items():
 for count, w in multi_word:
     each_counted.append(w)
 
-with open("labeled_corpus.tsv", encoding="utf-8") as csvfile:
-    readCSV = csv.reader(csvfile, delimiter='\t')
+with open("labeled_corpus.tsv", encoding="utf-8") as lf:
+    readCSV = csv.reader(lf, delimiter='\t')
     for row in readCSV:
         total += 1
         line_arr = list(row)
@@ -65,12 +65,10 @@ for w in my_prob:
         my_prob[w][i] = my_prob[w][i] / my_totes[i]
 classed = []
 
-with open('geo_twits_squares.tsv', encoding="utf-8") as csvfile:
-    # csvfile=csvfile.replace('\0', '')
-    readCSV = csv.reader((line.replace('\0', '') for line in csvfile), delimiter='\t')
+with open('geo_twits_squares.tsv', encoding="utf-8") as gf:
 
-    '''data=csvfile.read()
-    print (data.find('\x00'))'''
+    readCSV = csv.reader((line.replace('\0', '') for line in gf), delimiter='\t')
+
     for row in readCSV:
         converted_cats = {"positive": 0, "negative": 0, "neutral": 0, "irrelevant": 0}
         for i in range(4):
@@ -97,7 +95,7 @@ with open('geo_twits_squares.tsv', encoding="utf-8") as csvfile:
         final = list(converted_cats.keys())[list(converted_cats.values()).index(at_most)]
         classed.append((lat, long, final))
 
-with open('locations_figured.tsv', 'w') as tsvfile:
-    writer = csv.writer(tsvfile, delimiter='\t', lineterminator='\n')
+with open('locations_figured.tsv', 'w') as lt:
+    writer = csv.writer(lt, delimiter='\t', lineterminator='\n')
     for i in classed:
         writer.writerow(i)

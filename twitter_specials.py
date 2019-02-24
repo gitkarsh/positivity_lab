@@ -42,6 +42,7 @@ emo_repl = {
 emo_repl_order = [k for (k_len,k) in
                   reversed(sorted([(len(k),k) for k in emo_repl.keys()]))]
 
+
 def clean_tweet(tweet, emo_repl_order, emo_repl, re_repl):
     tweet = tweet.lower()
     tweet = re.sub(r"http\S+", "", tweet)
@@ -52,6 +53,5 @@ def clean_tweet(tweet, emo_repl_order, emo_repl, re_repl):
         tweet = re.sub(r, repl, tweet)
     tweet = re.sub(r'(\s)@\w+', r'\1', tweet)
     tweet = re.sub('[#.,!?;:]', '', tweet)
-
 
     return tweet
