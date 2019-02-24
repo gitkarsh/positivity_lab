@@ -110,4 +110,3 @@ with open('locations_classified.tsv', 'w') as lt:
     writer = csv.writer(lt, delimiter='\t', lineterminator='\n')
     for i in classed:
         writer.writerow(i)
-S
