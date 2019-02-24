@@ -3,11 +3,11 @@ import math
 from twitter_specials import *
 
 my_dict = {}
-my_cats = ["positive", "negative", "neutral", "irrelevant"]
+my_cats = ['positive', 'negative', 'neutral', 'irrelevant']
 my_prob = {}
 my_totes = [0, 0, 0, 0]
 
-with open("labeled_corpus.tsv", encoding="utf-8") as lf:
+with open('labeled_corpus.tsv', encoding='utf-8') as lf:
     readCSV = csv.reader(lf, delimiter='\t')
     for row in readCSV:
         line_arr = list(row)
@@ -29,17 +29,17 @@ with open("labeled_corpus.tsv", encoding="utf-8") as lf:
             if w not in my_dict:
                 my_dict[w] = 0
             my_dict[w] += 1
-            
+
 each_counted = []
 multi_word = []
 total = 0
-for w, count in my_dict.items():
+for (w, count) in my_dict.items():
     if count > 1:
         multi_word.append((count, w))
-for count, w in multi_word:
+for (count, w) in multi_word:
     each_counted.append(w)
 
-with open("labeled_corpus.tsv", encoding="utf-8") as lf:
+with open('labeled_corpus.tsv', encoding='utf-8') as lf:
     readCSV = csv.reader(lf, delimiter='\t')
     for row in readCSV:
         total += 1
@@ -66,12 +66,18 @@ for w in my_prob:
         my_prob[w][i] = my_prob[w][i] / my_totes[i]
 classed = []
 
-with open('geo_twits_squares.tsv', encoding="utf-8") as gf:
+with open('geo_twits_squares.tsv', encoding='utf-8') as gf:
 
-    readCSV = csv.reader((line.replace('\0', '') for line in gf), delimiter='\t')
+    readCSV = csv.reader((line.replace('\0', '') for line in gf),
+                         delimiter='\t')
 
     for row in readCSV:
-        converted_cats = {"positive": 0, "negative": 0, "neutral": 0, "irrelevant": 0}
+        converted_cats = {
+            'positive': 0,
+            'negative': 0,
+            'neutral': 0,
+            'irrelevant': 0,
+            }
         for i in range(4):
             converted_cats[my_cats[i]] = math.log2(my_totes[i] / total)
         line_arr = list(row)
@@ -86,17 +92,22 @@ with open('geo_twits_squares.tsv', encoding="utf-8") as gf:
                 words_set.add(w)
         for w in words_set:
             for i in range(4):
+
                 # print(classifier[w][i])
+
                 if my_prob[w][i] != 0:
-                    converted_cats[my_cats[i]] += math.log2(my_prob[w][i])
+                    converted_cats[my_cats[i]] += \
+                        math.log2(my_prob[w][i])
         at_most = converted_cats[my_cats[0]]
         for i in range(4):
             if converted_cats[my_cats[i]] > at_most:
                 at_most = converted_cats[my_cats[i]]
-        final = list(converted_cats.keys())[list(converted_cats.values()).index(at_most)]
+        final = \
+            list(converted_cats.keys())[list(converted_cats.values()).index(at_most)]
         classed.append((lat, long, final))
 
 with open('locations_classified.tsv', 'w') as lt:
     writer = csv.writer(lt, delimiter='\t', lineterminator='\n')
     for i in classed:
         writer.writerow(i)
+S
