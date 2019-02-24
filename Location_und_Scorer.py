@@ -34,6 +34,7 @@ for i in locations:
     tag.append(locations[i][1])
     figured.append(tag)
 
+# Had to add "var data =" in order to get json file to read,
 data = []
 for i in figured:
 
@@ -41,5 +42,6 @@ for i in figured:
     i[1] = round(float(i[1])+0.05/2, 2)
     data.append({'score': round(i[2], 2), 'g': i[1], 't': i[0]})
 
-with open('data.js', 'w') as outfile:
+with open('./public_html/data.js', 'w') as outfile:
     json.dump(data, outfile)
+
