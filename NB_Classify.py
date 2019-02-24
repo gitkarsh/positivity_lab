@@ -3,9 +3,16 @@ import math
 from twitter_specials import *
 
 my_dict = {}
-my_cats = ['positive', 'negative', 'neutral', 'irrelevant']
+
+my_cats = ['positive',
+           'negative',
+           'neutral',
+           'irrelevant']
+
 my_prob = {}
+
 my_totes = [0, 0, 0, 0]
+
 
 with open('labeled_corpus.tsv', encoding='utf-8') as lf:
     readCSV = csv.reader(lf, delimiter='\t')
@@ -30,6 +37,7 @@ with open('labeled_corpus.tsv', encoding='utf-8') as lf:
                 my_dict[w] = 0
             my_dict[w] += 1
 
+
 each_counted = []
 multi_word = []
 total = 0
@@ -38,6 +46,7 @@ for (w, count) in my_dict.items():
         multi_word.append((count, w))
 for (count, w) in multi_word:
     each_counted.append(w)
+
 
 with open('labeled_corpus.tsv', encoding='utf-8') as lf:
     readCSV = csv.reader(lf, delimiter='\t')
@@ -65,6 +74,7 @@ for w in my_prob:
     for i in range(4):
         my_prob[w][i] = my_prob[w][i] / my_totes[i]
 classed = []
+
 
 with open('geo_twits_squares.tsv', encoding='utf-8') as gf:
 
@@ -105,6 +115,7 @@ with open('geo_twits_squares.tsv', encoding='utf-8') as gf:
         final = \
             list(converted_cats.keys())[list(converted_cats.values()).index(at_most)]
         classed.append((lat, long, final))
+
 
 with open('locations_classified.tsv', 'w') as lt:
     writer = csv.writer(lt, delimiter='\t', lineterminator='\n')
